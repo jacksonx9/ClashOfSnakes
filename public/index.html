@@ -1,29 +1,77 @@
-<!doctype html>
-<html lang="en">
+﻿<!doctype html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Clash of Snakes</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8" />
+    <title>Clash of Snakes</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/ico" href="img/icon.png" />
+
 </head>
 <body>
-  <ul class="pages">
-    <li class="chat page">
-      <div class="chatArea">
-        <ul class="messages"></ul>
-      </div>
-      <input class="inputMessage" placeholder="Type here..."/>
-    </li>
-    <li class="login page">
-      <img src="img/logo.png"> 
-      <div class="form">
-        <h3 class="title">Enter your username:</h3>
-        <input class="usernameInput" type="text" maxlength="14" />
-      </div>
-    </li>
-  </ul>
+    <div id="page1">
+        <div class="waitSign" id="wait_sign">
+        </div>
+        <div class="levelTitle" id="levels">
+            LEVELS
+        </div>
+        <div class="first btn" id="easy" onclick="selectedLevel(2,1,300);">
+            Easy
+        </div>
 
-  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/main.js"></script>
+        <div class="second btn" id="normal" onclick="selectedLevel(10,2,300);">
+            Normal
+        </div>
+
+        <div class="third btn" id="hard" onclick="selectedLevel(20,5,200);">
+            Hard
+        </div>
+    </div>
+    <div class="login page" id="loginPage">
+        <div class="form">
+            <h3 class="title">Enter your username:</h3>
+            <input class="usernameInput" type="text" maxlength="14" />
+        </div>
+        <div class="passwordForm">
+            <h3 class="title">Enter your password:</h3>
+            <input class="passwordInput" type="password" maxlength="14" />
+        </div>
+        <div class="create btn" id="create" onclick="">
+            Create Account
+        </div>
+        <div class="submit btn" id="submit" onclick="newUser();">
+            Submit
+        </div>
+        <div class="description" id="loginName">
+            log in
+        </div>
+    </div>
+
+    <div id="detectingPage">
+        <div class="username_snake" id="username_snake"></div>
+        <div class="instruction" id="instruction">Please put both hands on top of the sensors.</div>
+        <div class="progress-bar" id="progressBar" style="--width:0" data-label="loading..."></div>
+    </div>
+
+    <div id="page2">
+        <div class="win" id="winTitle">
+            You Win!
+        </div>
+        <div class="again btn" id="again" onclick="restart()">
+            Play again?
+        </div>
+        <div class="player1 name" id="player1id"></div>
+        <div class="player1 winNum" id="player1win"></div>
+        <div class="player1 lostNum" id="player1lost"></div>
+        <div class="player2 name" id="player2id"></div>
+        <div class="player2 winNum" id="player2win"></div>
+        <div class="player2 lostNum" id="player2lost"></div>
+    </div>
+    <script type="text/javascript">
+
+    </script>
 </body>
+<canvas id="snake" width="608" height="608"></canvas>
+<img id="icon" src="img/logo.png" />
+<script src="../socket.io/socket.io.js"></script>
+<script src="/main.js"></script>
 </html>

@@ -1,7 +1,7 @@
 {
   "name": "clash-of-snakes",
   "version": "0.0.0",
-  "description": "2 players are reborn as snakes and battle it out!",
+  "description": "2 players connect to the same server and battle it out!",
   "main": "index.js",
   "author": "Jackson Xie",
   "private": true,
@@ -11,11 +11,11 @@
     "url": "https://github.com/jacksonx9/Clash-of-Snakes"
   },
   "dependencies": {
-    "express": "^4.16.4",
     "debug": "~4.1.0",
     "engine.io": "~3.3.1",
+    "express": "^4.16.4",
     "has-binary2": "~1.0.2",
-    "socket.io": "*"
+    "socket.io": "^2.2.0"
   },
   "scripts": {
     "start": "node index.js"

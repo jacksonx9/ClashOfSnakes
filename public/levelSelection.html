@@ -1,0 +1,70 @@
+﻿<!doctype html>
+<html>
+    <head>
+        <meta charset = "utf-8" />
+        <title>Clash of Snakes</title>
+        <link href="LevelSelectionStyleSheet.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body >
+        <div id ="page1">
+            <div class="waitSign" id="wait_sign"></div>
+            <div class="levelTitle" id="levels">
+                LEVELS
+            </div>
+            <div class="first btn" id="easy" onclick="snakeGame(1,1,150);" >
+                Easy
+            </div>
+    
+            <div class="second btn" id="normal" onclick="snakeGame(18,2,150);">
+                Normal
+            </div>
+    
+            <div class="third btn" id="hard" onclick="snakeGame(20,5,80);">
+                Hard
+            </div>    
+        </div>
+        <div class ="login page"id="loginPage">
+            <div class="form">
+                <h3 class="title">Enter your username:</h3>
+                <input class="usernameInput" type="text" maxlength="14" />
+            </div>
+            <div class="passwordForm">
+                <h3 class="title">Enter your password:</h3>
+                <input class="passwordInput" type="password" maxlength="14" />
+            </div>
+            <div class="create btn" id="again" onclick="window.location.href = 'makeAccount.html'">
+                Create Account
+            </div>
+            <div class="submit btn" id="again" onclick="newUser();">
+                Submit
+            </div>
+            <div class="description" id="loginName">
+                log in
+            </div>
+        </div>
+
+        <div id="detectingPage">
+            <div class="username_snake" id="username_snake"></div>
+            <div class="instruction" id="instruction">Please put both hands on top of the sensors.</div>
+            <div class="test btn" id="test" onclick="start();">
+                press to continue
+            </div>
+        </div>
+
+        <div id ="page2">
+            <div class="win" id="winTitle">
+                You Win!
+            </div>
+            <div class="again btn" id="again" onclick="restart()" >
+                Play again?
+            </div>
+        </div>
+        <script type="text/javascript">
+        
+        </script>
+    </body>
+    <canvas id="snake" width="608" height="608"></canvas>
+    <img id="icon" src="img/logo.png" />
+    <script src="../socket.io/socket.io.js"></script>
+    <script src="/main.js"></script>
+</html>

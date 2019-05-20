@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clash of Snakes</title>
+  <link rel="icon" type="image/ico" href="img/icon.png" />
+  <link rel="stylesheet" href="makeAccount.css">
+</head>
+<body>
+  <ul class="pages">
+    <li class="game page">
+      <div class="gameArea">
+        <ul class="messages"></ul>
+      </div>
+    </li>
+    <li class="login page">
+      <img src="img/logo.png"> 
+      <div class="form">
+        <h3 class="title">Username:</h3>
+        <input class="usernameInput" type="text" maxlength="14" />
+      </div>
+      <div class="passwordForm">
+        <h3 class="title">Password:</h3>
+        <input class="passwordInput" type="password" maxlength="14" />
+      </div>
+    </li>
+    <div class="button" id="again" onclick="window.location.href = 'index.html'">
+        Confirm
+    </div>
+    <div class="description" id ="signName">
+        Sign Up
+      </div>
+  </ul>
+
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
+</body>
+</html>

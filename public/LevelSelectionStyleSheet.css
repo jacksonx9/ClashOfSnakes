@@ -1,20 +1,21 @@
 ﻿@charset "utf-8";
 
-body {
+body{
     margin: auto;
     font-family: 'Sarpanch', sans-serif;
     background-color: black;
 }
 
 canvas {
-    display: none;
+    display:none;
     margin: 0% 27%;
 }
 
 img {
-    position: absolute;
+    position:absolute;
     top: 20%;
-    left: 0%;
+    left:0%;
+
     width: 50%;
     height: 65%;
 }
@@ -108,7 +109,6 @@ img {
     font-size: 200%;
     font-family: 'Sarpanch', sans-serif;
 }
-
     .btn:active {
         background-color: snow;
     }
@@ -118,11 +118,11 @@ img {
     position: absolute;
     top: 20%;
     left: 57%;
-    width: 40%;
+    width:40%;
     color: white;
     font-weight: bold;
     font-size: 200%;
-    display: none;
+    display:none;
 }
 
 .description {
@@ -149,12 +149,11 @@ img {
     left: 53%;
     width: 20%;
 }
-
-.first {
+.first{
     position: absolute;
     top: 50%;
     left: 55%;
-    display: none;
+    display:none;
 }
 
 .second {
@@ -182,25 +181,24 @@ img {
     left: 30%;
     color: green;
     font-weight: bold;
-    display: none;
+    display:none;
 }
-
 .again {
     position: absolute;
     top: 50%;
     left: 30%;
-    display: none;
+    display:none;
 }
 
-.progress-bar {
-    position: absolute;
+.progress-bar{
+    position:absolute;
     width: 1100px;
     height: 3em;
-    background-color: white;
+    background-color: honeydew;
     border-radius: 1.5em;
     border: 1px solid white;
     color: white;
-    top: 90%;
+    top:670px;
     left: 10%;
     display: none;
 }
@@ -216,7 +214,7 @@ img {
     width: calc(var(--width,0)*1%);
     min-width: 2rem;
     max-width: calc(100% - 1em);
-    background-color: black;
+    background-color: darkgreen;
     border-radius: 1em;
     padding: 1em;
 }
@@ -232,12 +230,11 @@ img {
     left: 55%;
     display: none;
 }
-
 .test {
     position: absolute;
     top: 80%;
     left: 55%;
-    display: none;
+    display:none;
 }
 
 .username_snake {
@@ -252,37 +249,11 @@ img {
     display: none;
 }
 
-.player1 {
+.full {
     position: absolute;
     color: white;
-    align-content: center;
     width: 40%;
-    font-size: 35px;
-    left: 35%;
-    display: none;
+    font-size: 60px;
+    top: 30%;
+    left: 30%;
 }
-.player2 {
-    position: absolute;
-    color: white;
-    align-content: center;
-    width: 40%;
-    font-size: 35px;
-    left: 55%;
-    display: none;
-}
-
-.name {
-    position: absolute;
-    top: 63%;
-}
-
-.winNum {
-    position: absolute;
-    top: 70%;
-}
-
-.lostNum {
-    position: absolute;
-    top: 77%;
-}
-
