@@ -114,7 +114,9 @@ function newUser() {
             socket.emit('add user', username, password);     
         }
         console.log("loading");
-        loading();
+        //loading();
+        loginP.style.display = "none";
+        setTimeout(showLevelPage, 1000);
     }
 }
 
@@ -530,29 +532,29 @@ function headCollision() {
 
 /* ---------------------------------------------------page changes---------------------------------------------------- */
 
-//hide levelselection page and load the detect page 
-function loading() {
-    flag++;
-    loginP.style.display = "none";
-    inst.style.display = "block";
-    progressBar.style.display = "block";
-    //setTimeout(changename, 1000);
-    setInterval(fillingBar, 7);
+// //hide levelselection page and load the detect page 
+// function loading() {
+//     flag++;
+//     loginP.style.display = "none";
+//     inst.style.display = "block";
+//     progressBar.style.display = "block";
+//     //setTimeout(changename, 1000);
+//     setInterval(fillingBar, 7);
     
-}
+// }
 
-function fillingBar() {
-    const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0;
-    progressBar.style.setProperty('--width', width + .1);
-    if (width == 50) {
-        socket.emit('set player id');
-    }
+// function fillingBar() {
+//     const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0;
+//     progressBar.style.setProperty('--width', width + .1);
+//     if (width == 50) {
+//         socket.emit('set player id');
+//     }
 
-    if (width == 100) {
-        clearInterval(fillingBar);
-        setTimeout(showLevelPage, 1000);
-    }
-}
+//     if (width == 100) {
+//         clearInterval(fillingBar);
+//         setTimeout(showLevelPage, 1000);
+//     }
+// }
 
 
 //display the game, hide detecting page
