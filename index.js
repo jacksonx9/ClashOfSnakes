@@ -6,6 +6,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var port = process.env.PORT || 3000;
 var player1;
+var player2;
 const box = 32;
 var playerNum = 1;
 
@@ -45,8 +46,9 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('right2');
   });
 
-  // when the client emits 'new arrowkey', this listens and executes
+  // when t client emits 'new arrowkey', this listens and executes
   socket.on('new arrowkey', (data) => {
+    console.log("socket.username = " + socket.username);
     // we tell the client to execute 'new arrowkey'
     socket.broadcast.emit('new arrowkey', {
       username: socket.username,
@@ -70,8 +72,8 @@ io.on('connection', (socket) => {
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', (username, password) => {
-    if (addedUser) return;
-    if (addedPassword) return;
+    // if (addedUser) return;
+    // if (addedPassword) return;
 
     if (numUsers > 2) {
       socket.emit('full', {
@@ -81,35 +83,41 @@ io.on('connection', (socket) => {
     }
 
     // we store the username in the socket session for this client
-    socket.username = username;
-    socket.password = password;
+    // socket.password = password;
     ++numUsers;
-    addedUser = true;
-    addedPassword = true;
-    if (numUsers == 1) {
-      player1 = socket.username;
+    console.log(numUsers);
+    // addedUser = true;
+    // addedPassword = true;
+    if (numUsers <= 1) {
+      player1 = username;
+    } else {
+      player2 = username;
     }
 
+    console.log("player1: " + player1);
+    console.log("player2: " + player2);
     // create the initial apple
     let food = {
       x : Math.floor(Math.random()*17+1) * box,
       y : Math.floor(Math.random()*15+3) * box
     }
 
-    socket.emit('login', {
-      username: socket.username,
-      food: food,
+    socket.emit('user joined', {
+      player2: player2,
       player1: player1,
+      food: food,
+      // password: socket.password,
       numUsers: numUsers
     });
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit('user joined', {
-      username: socket.username,
+      player2: player2,
       player1: player1,
       food: food,
-      password: socket.password,
+      // password: socket.password,
       numUsers: numUsers
     });
+    console.log("broadcasted");
   });
 
 

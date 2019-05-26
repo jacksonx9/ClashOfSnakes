@@ -40,6 +40,7 @@ const computedStyle = getComputedStyle(progressBar);
 let winnerName;
 let player1 = "player1";
 let player2 = "player2";
+var numUsers = 0;
 
 // create the unit
 const box = 32;
@@ -102,20 +103,24 @@ function addStatusMessage(data) {
 
 // new User entered. Move to level Select Page 
 function newUser() {
+    console.log("new user");
     username = usernameInput.value.trim();
     password = passwordInput.value.trim();
     
     if (password == correct_password) {
         if (username && password) {
+            console.log("username && password");
             // Tell the server your username
             socket.emit('add user', username, password);     
         }
+        console.log("loading");
         loading();
     }
 }
 
 // Sends a arrow key message
 function sendArrowKey(keyPressed) {
+    console.log("sendArrowKey()");
     // if there is a non-empty message and a socket connection
     if (keyPressed && connected) {
         // tell server to execute 'new arrowkey' and send along one parameter
@@ -189,7 +194,7 @@ socket.on('full', (data) => {
 // Whenever the server emits 'new arrowkey', update the display body
 socket.on('new arrowkey', (data) => {
     if (game_page) {
-        if (username == player1) {
+        if (username == player2) {
             second_snake_direction(data.message);
         } else {
             first_snake_direction(data.message);
@@ -241,16 +246,19 @@ socket.on('make apple at', (data) => {
 // Whenever the server emits 'user joined', log it in the game body
 socket.on('user joined', (data) => {
     food = data.food;
+    console.log("user joined");
     
     if (data.numUsers > 1) {
-        player2 = data.username;
+        player2 = data.player2;
+        player1 = data.player1;
         wait_sign.innerHTML = "Please select a level";
         num_people_meet = true;
         console.log('Hello ' + player2 + ' you are player2');
-    } else {
-        player1 = data.username;
-        console.log('Other player ' + player1 + ' is player1');
-    }
+    } 
+    // else {
+    //     player1 = data.username;
+    //     console.log('Other player ' + player1 + ' is player1');
+    // }
     
     addStatusMessage(data);
 });
@@ -468,9 +476,9 @@ function draw() {
     
     ctx.fillStyle = "blue";
     ctx.font = "30px Changa one";
-    ctx.fillText(player2 + ": "+first_score, 2 * box, 1.6 * box);
+    ctx.fillText(player1 + ": "+first_score, 2 * box, 1.6 * box);
     ctx.fillStyle = "orange";
-    ctx.fillText(player1 +": " + second_score, 14 * box, 1.6 * box);
+    ctx.fillText(player2 +": " + second_score, 14 * box, 1.6 * box);
     ctx.fillStyle = "white";
     ctx.fillText("Goal: " + maxScore, 8 * box, 1.6 * box);
 }
@@ -524,21 +532,20 @@ function headCollision() {
 //hide levelselection page and load the detect page 
 function loading() {
     flag++;
-    if (num_people_meet) {
-        loginP.style.display = "none";
-        inst.style.display = "block";
-        progressBar.style.display = "block";
-        //setTimeout(changename, 1000);
-        setInterval(fillingBar, 7);
-    }
+    loginP.style.display = "none";
+    inst.style.display = "block";
+    progressBar.style.display = "block";
+    //setTimeout(changename, 1000);
+    setInterval(fillingBar, 7);
+    
 }
 
 function fillingBar() {
     const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0;
     progressBar.style.setProperty('--width', width + .1);
-    // if (width == 50) {
-    //     socket.emit('set player id');
-    // }
+    if (width == 50) {
+        socket.emit('set player id');
+    }
 
     if (width == 100) {
         clearInterval(fillingBar);
@@ -549,14 +556,16 @@ function fillingBar() {
 
 //display the game, hide detecting page
 function start() {
-    icon.style.display = "none";
-    inst.style.display = "none";
-    levels.style.display = "none";
-    easybtn.style.display = "none";
-    normalbtn.style.display = "none";
-    hardbtn.style.display = "none";
-    waitSign.style.display = "none";
-    cvs.style.display = "block";
+    if(num_people_meet) {
+        icon.style.display = "none";
+        inst.style.display = "none";
+        levels.style.display = "none";
+        easybtn.style.display = "none";
+        normalbtn.style.display = "none";
+        hardbtn.style.display = "none";
+        waitSign.style.display = "none";
+        cvs.style.display = "block";
+    }
 }
 
 function restart() {
@@ -598,8 +607,8 @@ function drawGB() {
     winTitle.style.display = "block";
     againbtn.style.display = "block";
 
-    p1ID.innerHTML = player2;
-    p2ID.innerHTML = player1;
+    p1ID.innerHTML = player1;
+    p2ID.innerHTML = player2;
     p1Win.innerHTML = "WIN: " + p1WinNum;
     p2Win.innerHTML = "WIN: " + p2WinNum;
     p1Lost.innerHTML = "LOST: " + p1LostNum;
