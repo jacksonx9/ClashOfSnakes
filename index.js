@@ -4,6 +4,7 @@ var app = express();
 var path = require('path');
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
+var mongoose = require('mongoose');
 var port = process.env.PORT || 3000;
 var player1;
 const box = 32;
@@ -15,9 +16,21 @@ server.listen(port, () => {
   console.log('Server listening at port %d', port);
 });
 
+mongoose.connect('mongodb://localhost/clashOfSnakes');
+let db = mongoose.connection;
+
+db.once('open', function(){
+  console.log('Connected to MongoDB');
+})
+
+db.on('error', function(err){
+  console.log(err);
+});
+
+let Articles = require('./models/article');
+
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
-
 /* --------------------------------- Gameroom ----------------------------------- */
 var numUsers = 0;
 
