@@ -32,17 +32,17 @@ io.on('connection', (socket) => {
   });
 
   socket.on('right1', () => {
-        console.log('right1');
+    console.log('right1');
     socket.broadcast.emit('right1');
   });
 
   socket.on('left2', () => {
-        console.log('left2');
+    console.log('left2');
     socket.broadcast.emit('left2');
   });
 
   socket.on('right2', () => {
-        console.log('right2');
+    console.log('right2');
     socket.broadcast.emit('right2');
   });
 
@@ -81,6 +81,7 @@ io.on('connection', (socket) => {
       });
       return;
     }
+    socket.username = username;
 
     // we store the username in the socket session for this client
     // socket.password = password;

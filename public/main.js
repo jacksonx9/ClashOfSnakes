@@ -122,10 +122,11 @@ function newUser() {
 function sendArrowKey(keyPressed) {
     console.log("sendArrowKey()");
     // if there is a non-empty message and a socket connection
-    if (keyPressed && connected) {
+    // if (keyPressed && connected) {
+        // console.log("keyPressed and connected");
         // tell server to execute 'new arrowkey' and send along one parameter
-        socket.emit('new arrowkey', keyPressed);
-    }
+    socket.emit('new arrowkey', keyPressed);
+    // }
 }
 
 window.addEventListener("keydown", event => {
@@ -194,7 +195,7 @@ socket.on('full', (data) => {
 // Whenever the server emits 'new arrowkey', update the display body
 socket.on('new arrowkey', (data) => {
     if (game_page) {
-        if (username == player2) {
+        if (data.username == player2) {
             second_snake_direction(data.message);
         } else {
             first_snake_direction(data.message);
