@@ -26,6 +26,34 @@ io.on('connection', (socket) => {
   var addedUser = false;
   var addedPassword = false;
 
+  socket.on('request login', (username, password) => {
+    var reply = 'success'; //some database query default to success for now
+
+    if(reply == 'success') {
+      //socket.username = username; // save this client's username for later identification use
+      //add to players list
+    }
+
+    socket.emit('reply login', reply);
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   socket.on('left1', () => {
     console.log('left1');
     socket.broadcast.emit('left1');
@@ -71,17 +99,14 @@ io.on('connection', (socket) => {
   });
 
   // when the client emits 'add user', this listens and executes
-  socket.on('add user', (username, password) => {
-    // if (addedUser) return;
-    // if (addedPassword) return;
-
-    if (numUsers > 2) {
+  socket.on('add user', () => {
+    if (numUsers == 2) {
       socket.emit('full', {
         numUsers: numUsers
       });
       return;
     }
-    socket.username = username;
+    //socket.username = username;
 
     // we store the username in the socket session for this client
     // socket.password = password;
@@ -90,9 +115,9 @@ io.on('connection', (socket) => {
     // addedUser = true;
     // addedPassword = true;
     if (numUsers <= 1) {
-      player1 = username;
+      player1 = socket.username;
     } else {
-      player2 = username;
+      player2 = socket.username;
     }
 
     console.log("player1: " + player1);

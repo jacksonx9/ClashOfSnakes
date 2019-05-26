@@ -4,12 +4,10 @@ const passwordInput = document.getElementsByClassName('passwordInput')[0]; // In
 
 // Prompt for setting a username
 var username;
-var password;
 var connected = false;
 var num_people_meet = false;
+var loginSuccess = true; //placeholder for database query return val
 var flag = 0;
-
-var correct_password = "snake";
 
 const socket = io();
 
@@ -101,22 +99,25 @@ function addStatusMessage(data) {
     console.log(message);
 }
 
-// new User entered. Move to level Select Page 
-function newUser() {
-    console.log("new user");
+// gets the response of the user's login request 
+socket.on('reply login', (loginResponse) => {
+    loginSuccess = (loginResponse == "success");
+});
+
+// Add user to the game and proceed to level selection upon successful login
+function LoginUser() {
     username = usernameInput.value.trim();
-    password = passwordInput.value.trim();
-    
-    if (password == correct_password) {
-        if (username && password) {
-            console.log("username && password");
-            // Tell the server your username
-            socket.emit('add user', username, password);     
-        }
-        console.log("loading");
-        //loading();
+    var password = passwordInput.value.trim();
+
+    socket.emit('request login', username, password);
+
+    if(loginSuccess) {
+        socket.emit('add user');     
         loginP.style.display = "none";
         setTimeout(showLevelPage, 1000);
+    } else {
+        //try again msg html
+        alert("wrong password/username");
     }
 }
 
