@@ -5,10 +5,11 @@ var path = require('path');
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var port = process.env.PORT || 3000;
+const box = 32;
+// var players = new Map();
+
 var player1;
 var player2;
-const box = 32;
-var playerNum = 1;
 
 /* ------------------------------- Setup Socket --------------------------------- */
 
@@ -24,61 +25,27 @@ var numUsers = 0;
 
 io.on('connection', (socket) => {
   var addedUser = false;
-  var addedPassword = false;
 
+  //accept or deny client login request
   socket.on('request login', (username, password) => {
     var reply = 'success'; //some database query default to success for now
 
-    if(reply == 'success') {
-      //socket.username = username; // save this client's username for later identification use
-      //add to players list
+    if (reply == 'success') {
+      socket.addedUser = true;
+      socket.username = username; // save this client's username for later identification use
+      // players.set(username, socket); // add it to the map for player matching
+      // console.log(players.keys());
+      // socket.broadcast.emit('add player', username); //update opponent selection page
     }
 
     socket.emit('reply login', reply);
-  });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  socket.on('left1', () => {
-    console.log('left1');
-    socket.broadcast.emit('left1');
-  });
-
-  socket.on('right1', () => {
-    console.log('right1');
-    socket.broadcast.emit('right1');
-  });
-
-  socket.on('left2', () => {
-    console.log('left2');
-    socket.broadcast.emit('left2');
-  });
-
-  socket.on('right2', () => {
-    console.log('right2');
-    socket.broadcast.emit('right2');
   });
 
   // when t client emits 'new arrowkey', this listens and executes
   socket.on('new arrowkey', (data) => {
     console.log("socket.username = " + socket.username);
     // we tell the client to execute 'new arrowkey'
-    socket.broadcast.emit('new arrowkey', {
+    io.emit('new arrowkey', {
       username: socket.username,
       message: data
     });
@@ -100,21 +67,18 @@ io.on('connection', (socket) => {
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', () => {
+    //delete after scaling to multiplayer
     if (numUsers == 2) {
       socket.emit('full', {
         numUsers: numUsers
       });
       return;
     }
-    //socket.username = username;
 
-    // we store the username in the socket session for this client
-    // socket.password = password;
     ++numUsers;
-    console.log(numUsers);
-    // addedUser = true;
-    // addedPassword = true;
-    if (numUsers <= 1) {
+    console.log("numUsers " + numUsers);
+
+    if (numUsers == 1) {
       player1 = socket.username;
     } else {
       player2 = socket.username;
@@ -122,30 +86,21 @@ io.on('connection', (socket) => {
 
     console.log("player1: " + player1);
     console.log("player2: " + player2);
+
     // create the initial apple
     let food = {
-      x : Math.floor(Math.random()*17+1) * box,
-      y : Math.floor(Math.random()*15+3) * box
+      x: Math.floor(Math.random() * 17 + 1) * box,
+      y: Math.floor(Math.random() * 15 + 3) * box
     }
 
-    socket.emit('user joined', {
-      player2: player2,
-      player1: player1,
-      food: food,
-      // password: socket.password,
-      numUsers: numUsers
-    });
     // echo globally (all clients) that a person has connected
-    socket.broadcast.emit('user joined', {
+    io.emit('user joined', {
       player2: player2,
       player1: player1,
       food: food,
-      // password: socket.password,
       numUsers: numUsers
     });
-    console.log("broadcasted");
   });
-
 
   socket.on('apple ate', (food, first_score, second_score) => {
     socket.broadcast.emit('make apple at', {
@@ -159,7 +114,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     if (addedUser) {
       --numUsers;
-      
+
       // echo globally that this client has left
       socket.broadcast.emit('user left', {
         username: socket.username,
