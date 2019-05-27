@@ -92,10 +92,6 @@ let newHead;
 let newHead2;
 let oldHead2;
 
-function addStatusMessage(data) {
-
-}
-
 // gets the response of the user's login request 
 socket.on('reply login', (loginResponse) => {
     loginSuccess = (loginResponse == "success");
@@ -153,6 +149,7 @@ window.addEventListener("keydown", event => {
 /* ---------------------------------------- Socket events ------------------------------------------------------------ */
 
 socket.on('level selected', (data) => {
+    alert("level selected");
     snakeGame(data.goal, data.lost, data.speed);
 });
 
@@ -176,6 +173,13 @@ socket.on('new arrowkey', (data) => {
 
 socket.on('winner determined', (data) => {
     winnerName = data.winnerName;
+    if(data.winnerName == player1){
+        p1WinNum++;
+        p2LostNum++;
+    } else {
+        p2WinNum++;
+        p1LostNum++;
+    }
     drawGB();
 });
 
@@ -202,7 +206,6 @@ socket.on('user joined', (data) => {
 // Whenever the server emits 'user left', log it in the game body
 socket.on('user left', (data) => {
     console.log(data.username + ' left');
-    addStatusMessage(data);
 });
 
 socket.on('disconnect', () => {
@@ -327,6 +330,7 @@ function draw() {
             p1LostNum++;
         }
         clearInterval(game);
+        socket.emit("winner determined", winnerName);
         drawGB();
     }
 
@@ -538,7 +542,6 @@ function restart() {
 
 
 function drawGB() {
-    socket.emit("winner determined", winnerName);
     cvs.style.display = "none";
     winTitle.innerHTML = "You Win! " + winnerName;
     winTitle.style.display = "block";

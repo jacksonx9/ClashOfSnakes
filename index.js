@@ -60,6 +60,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on("winner determined", (winnerName) => {
+    console.log("winner determined");
     socket.broadcast.emit("winner determined", {
       winnerName: winnerName
     });
