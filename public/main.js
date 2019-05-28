@@ -1,6 +1,6 @@
 // Initialize variables
-const usernameInput = document.getElementsByClassName('usernameInput')[0]; // Input for username
-const passwordInput = document.getElementsByClassName('passwordInput')[0]; // Input for password
+const usernameInput = document.getElementsByClassName('usernameInput')[0]; // Input for 
+const passwordInput = document.getElementsByClassName('passwordInput')[0]; // Input for 
 
 // Prompt for setting a username
 var username;
@@ -113,15 +113,6 @@ function LoginUser() {
     }
 }
 
-// socket.on('add player', (playerNames) => {
-//     alert(playerNames);
-//     // var newPlayerItem = document.createElement("A LI");  
-//     // var playerName = document.createTextNode(username);         
-//     // newPlayerItem.appendChild(playerName);                             
-//     // playersList.appendChild(newPlayerItem);     
-// });
-
-
 window.addEventListener("keydown", event => {
     // Do nothing if enter is pressed
     if (event.which === 13) {
@@ -149,7 +140,6 @@ window.addEventListener("keydown", event => {
 /* ---------------------------------------- Socket events ------------------------------------------------------------ */
 
 socket.on('level selected', (data) => {
-    alert("level selected");
     snakeGame(data.goal, data.lost, data.speed);
 });
 

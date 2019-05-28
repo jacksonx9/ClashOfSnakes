@@ -6,7 +6,6 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var port = process.env.PORT || 3000;
 const box = 32;
-// var players = new Map();
 
 var player1;
 var player2;
@@ -33,9 +32,6 @@ io.on('connection', (socket) => {
     if (reply == 'success') {
       socket.addedUser = true;
       socket.username = username; // save this client's username for later identification use
-      // players.set(username, socket); // add it to the map for player matching
-      // console.log(players.keys());
-      // socket.broadcast.emit('add player', username); //update opponent selection page
     }
 
     socket.emit('reply login', reply);
