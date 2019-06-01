@@ -6,6 +6,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var port = process.env.PORT || 3000;
 const box = 32;
+var firstGame = true;
 
 var player1;
 var player2;
@@ -57,6 +58,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on("winner determined", (winnerName) => {
+    firstGame = false;
     console.log("winner determined");
     numUsers = 0;
     socket.broadcast.emit("winner determined", {
@@ -77,10 +79,12 @@ io.on('connection', (socket) => {
     ++numUsers;
     console.log("numUsers " + numUsers);
 
-    if (numUsers == 1) {
-      player1 = socket.username;
-    } else {
-      player2 = socket.username;
+    if (firstGame) {
+      if (numUsers == 1) {
+        player1 = socket.username;
+      } else {
+        player2 = socket.username;
+      }
     }
 
     console.log("player1: " + player1);

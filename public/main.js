@@ -227,13 +227,13 @@ function selectedLevel(goal, lost, speed) {
 
 //set numLost, maxScore, and updating speed based on the passing parameters
 function snakeGame(goal, lost, speed) {
+
     game_page = true;
     numLost = lost;
     maxScore = goal;
     updateSpeed = speed;
     game = setInterval(draw, updateSpeed);
     let winnerName = "";
-
     setTimeout(start, 500);
 
 }
@@ -325,6 +325,7 @@ function draw() {
             p1LostNum++;
         }
         clearInterval(game);
+        console.log("emmited winner determined");
         socket.emit("winner determined", winnerName);
         drawGB();
     }
@@ -461,33 +462,6 @@ function headCollision() {
     return false;
 
 }
-
-/* ---------------------------------------------------page changes---------------------------------------------------- */
-
-// //hide levelselection page and load the detect page 
-// function loading() {
-//     flag++;
-//     loginP.style.display = "none";
-//     inst.style.display = "block";
-//     progressBar.style.display = "block";
-//     //setTimeout(changename, 1000);
-//     setInterval(fillingBar, 7);
-
-// }
-
-// function fillingBar() {
-//     const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0;
-//     progressBar.style.setProperty('--width', width + .1);
-//     if (width == 50) {
-//         socket.emit('set player id');
-//     }
-
-//     if (width == 100) {
-//         clearInterval(fillingBar);
-//         setTimeout(showLevelPage, 1000);
-//     }
-// }
-
 
 //display the game, hide detecting page
 function start() {
