@@ -16,6 +16,7 @@ const loginWarning = document.getElementById("login warning")
 //for later use
 // const playersList = document.getElementById("playersList");
 // const opponentSelectionPage = document.getElementById("selectOpponentPage");
+const winPage = document.getElementById("page2");
 const cvs = document.getElementById("snake");
 const ctx = cvs.getContext("2d");
 const icon = document.getElementById("icon");
@@ -107,7 +108,7 @@ function LoginUser() {
     if (loginSuccess) {
         socket.emit('add user');
         loginP.style.display = "none";
-        setTimeout(showLevelPage, 1000); 
+        setTimeout(showLevelPage, 1000);
     } else {
         loginWarning = 'Wrong username or password';
     }
@@ -163,7 +164,7 @@ socket.on('new arrowkey', (data) => {
 
 socket.on('winner determined', (data) => {
     winnerName = data.winnerName;
-    if(data.winnerName == player1){
+    if (data.winnerName == player1) {
         p1WinNum++;
         p2LostNum++;
     } else {
@@ -216,8 +217,12 @@ socket.on('reconnect_error', () => {
 /* ----------------------------------------------snake game-----------------------------------------------------*/
 
 function selectedLevel(goal, lost, speed) {
-    snakeGame(goal, lost, speed);
-    socket.emit('level selected', goal, lost, speed);
+    if (num_people_meet) {
+        snakeGame(goal, lost, speed);
+        socket.emit('level selected', goal, lost, speed);
+    } else {
+        alert("Please wait for the other player to join");
+    }
 }
 
 //set numLost, maxScore, and updating speed based on the passing parameters
@@ -486,20 +491,20 @@ function headCollision() {
 
 //display the game, hide detecting page
 function start() {
-    if (num_people_meet) {
-        icon.style.display = "none";
-        inst.style.display = "none";
-        levels.style.display = "none";
-        easybtn.style.display = "none";
-        normalbtn.style.display = "none";
-        hardbtn.style.display = "none";
-        waitSign.style.display = "none";
-        cvs.style.display = "block";
-    }
+    icon.style.display = "none";
+    inst.style.display = "none";
+    levels.style.display = "none";
+    easybtn.style.display = "none";
+    normalbtn.style.display = "none";
+    hardbtn.style.display = "none";
+    waitSign.style.display = "none";
+    cvs.style.display = "block";
 }
 
 function restart() {
-    document.getElementById("page2").style.display = "none";
+    num_people_meet = false;
+    socket.emit('add user');
+    winPage.style.display = "none";
     winTitle.style.display = "none";
     againbtn.style.display = "none";
     p1ID.style.display = "none";
@@ -532,6 +537,7 @@ function restart() {
 
 
 function drawGB() {
+    winPage.style.display = "block";
     cvs.style.display = "none";
     winTitle.innerHTML = "You Win! " + winnerName;
     winTitle.style.display = "block";

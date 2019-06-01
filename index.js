@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
     socket.emit('reply login', reply);
   });
 
-  // when t client emits 'new arrowkey', this listens and executes
+  // when client emits 'new arrowkey', this listens and executes
   socket.on('new arrowkey', (data) => {
     console.log("socket.username = " + socket.username);
     // we tell the client to execute 'new arrowkey'
@@ -48,6 +48,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('level selected', (goal, lost, speed) => {
+    console.log("speed: " + speed);
     socket.broadcast.emit('level selected', {
       goal: goal,
       lost: lost,
@@ -57,6 +58,7 @@ io.on('connection', (socket) => {
 
   socket.on("winner determined", (winnerName) => {
     console.log("winner determined");
+    numUsers = 0;
     socket.broadcast.emit("winner determined", {
       winnerName: winnerName
     });
