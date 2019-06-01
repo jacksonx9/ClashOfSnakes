@@ -180,6 +180,7 @@ socket.on('make apple at', (data) => {
     food = data.food;
     first_score = data.first_score;
     second_score = data.second_score;
+    console.log("make apple at: " + food.x + ", " + food.y);
 });
 
 // Whenever the server emits 'user joined', log it in the game body
@@ -352,11 +353,12 @@ function draw() {
     if (first_snakeX == food.x && first_snakeY == food.y) {
         first_score++;
         if (first_score != maxScore) {
-            food = {
+            var newFood = {
                 x: Math.floor(Math.random() * 17 + 1) * box,
                 y: Math.floor(Math.random() * 15 + 3) * box
             }
-            socket.emit('apple ate', food, first_score, second_score);
+            socket.emit('apple ate', newFood, first_score, second_score);
+            console.log("apple snake 1 ate x, y: " + newFood.x + ", " + newFood.y);
         }
         // we don't remove the tail
     } else if (first_snake.length - 1 == first_score) {
@@ -373,6 +375,7 @@ function draw() {
                 y: Math.floor(Math.random() * 15 + 3) * box
             }
             socket.emit('apple ate', food, first_score, second_score);
+            console.log("apple snake 2 ate x, y: " + food.x + ", " + food.y);
         }
         // we don't remove the tail
     } else if (second_snake.length - 1 == second_score) {

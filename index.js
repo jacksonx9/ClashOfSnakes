@@ -106,7 +106,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('apple ate', (food, first_score, second_score) => {
-    socket.broadcast.emit('make apple at', {
+    io.emit('make apple at', {
       food: food,
       first_score: first_score,
       second_score: second_score
