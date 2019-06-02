@@ -115,13 +115,12 @@ io.on('connection', (socket) => {
 
   // when the user disconnects.. perform this
   socket.on('disconnect', () => {
-    if (addedUser) {
-      --numUsers;
-
+    if (socket.addedUser) {
+      firstGame = true;
+      numUsers = 0;
       // echo globally that this client has left
       socket.broadcast.emit('user left', {
         username: socket.username,
-        numUsers: numUsers
       });
     }
   });

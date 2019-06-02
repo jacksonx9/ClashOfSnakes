@@ -147,8 +147,7 @@ socket.on('level selected', (data) => {
 // Whenever the server emits 'login', log the login message
 socket.on('full', (data) => {
     connected = false;
-    var message = "Sorry, the game is full. You can observe the current game";
-    console.log('full');
+    alert("Sorry the game is full");
 });
 
 // Whenever the server emits 'new arrowkey', update the display body
@@ -161,20 +160,6 @@ socket.on('new arrowkey', (data) => {
         }
     }
 });
-
-socket.on('winner determined', (data) => {
-    clearInterval(game);
-    winnerName = data.winnerName;
-    if (data.winnerName == player1) {
-        p1WinNum++;
-        p2LostNum++;
-    } else {
-        p2WinNum++;
-        p1LostNum++;
-    }
-    drawGB();
-});
-
 
 // Whenever the server emits 'make apple at', make an apple at specified position
 socket.on('make apple at', (data) => {
@@ -198,7 +183,16 @@ socket.on('user joined', (data) => {
 
 // Whenever the server emits 'user left', log it in the game body
 socket.on('user left', (data) => {
-    console.log(data.username + ' left');
+    alert(data.username + ' left');
+    clearInterval(game);
+    cvs.style.display = "none";
+    
+    p1WinNum = 0;
+    p2WinNum = 0;
+    p1LostNum = 0;
+    p2LostNum = 0;
+
+    restart();
 });
 
 socket.on('disconnect', () => {
