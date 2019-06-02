@@ -163,6 +163,7 @@ socket.on('new arrowkey', (data) => {
 });
 
 socket.on('winner determined', (data) => {
+    clearInterval(game);
     winnerName = data.winnerName;
     if (data.winnerName == player1) {
         p1WinNum++;

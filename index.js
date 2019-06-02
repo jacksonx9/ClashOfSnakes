@@ -61,9 +61,9 @@ io.on('connection', (socket) => {
     firstGame = false;
     console.log("winner determined");
     numUsers = 0;
-    socket.broadcast.emit("winner determined", {
-      winnerName: winnerName
-    });
+    // socket.broadcast.emit("winner determined", {
+    //   winnerName: winnerName
+    // });
   });
 
   // when the client emits 'add user', this listens and executes
