@@ -302,9 +302,9 @@ function draw() {
         ctx.strokeStyle = "#ffcc80";
         ctx.strokeRect(second_snake[i].x, second_snake[i].y, box, box);
     }
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = "green";
     ctx.fillRect(first_snake[0].x, first_snake[0].y, box, box);
-    ctx.fillStyle = "orange";
+    ctx.fillStyle = "red";
     ctx.fillRect(second_snake[0].x, second_snake[0].y, box, box);
 
     ctx.drawImage(foodImg, food.x, food.y);
@@ -408,11 +408,11 @@ function draw() {
     first_snake.unshift(newHead);
     second_snake.unshift(newHead2);
 
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = "green";
     ctx.font = "30px Changa one";
-    ctx.fillText(player1 + ": " + first_score, 2 * box, 1.6 * box);
-    ctx.fillStyle = "orange";
-    ctx.fillText(player2 + ": " + second_score, 14 * box, 1.6 * box);
+    ctx.fillText(player1 + ": " + first_score, 14 * box, 1.6 * box);
+    ctx.fillStyle = "red";
+    ctx.fillText(player2 + ": " + second_score, 2 * box, 1.6 * box);
     ctx.fillStyle = "white";
     ctx.fillText("Goal: " + maxScore, 8 * box, 1.6 * box);
 }
