@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
 
   // when client emits 'new arrowkey', this listens and executes
   socket.on('new arrowkey', (data) => {
-    console.log("socket.username = " + socket.username);
+    console.log('socket.username = ' + socket.username);
     // we tell the client to execute 'new arrowkey'
     io.emit('new arrowkey', {
       username: socket.username,
@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('level selected', (goal, lost, speed) => {
-    console.log("speed: " + speed);
+    console.log('speed: ' + speed);
     socket.broadcast.emit('level selected', {
       goal: goal,
       lost: lost,
@@ -57,11 +57,11 @@ io.on('connection', (socket) => {
     });
   });
 
-  socket.on("winner determined", (winnerName) => {
+  socket.on('winner determined', (winnerName) => {
     firstGame = false;
-    console.log("winner determined");
+    console.log('winner determined');
     numUsers = 0;
-    // socket.broadcast.emit("winner determined", {
+    // socket.broadcast.emit('winner determined', {
     //   winnerName: winnerName
     // });
   });
@@ -77,7 +77,7 @@ io.on('connection', (socket) => {
     }
 
     ++numUsers;
-    console.log("numUsers " + numUsers);
+    console.log('numUsers ' + numUsers);
 
     if (firstGame) {
       if (numUsers == 1) {
@@ -87,8 +87,8 @@ io.on('connection', (socket) => {
       }
     }
 
-    console.log("player1: " + player1);
-    console.log("player2: " + player2);
+    console.log('player1: ' + player1);
+    console.log('player2: ' + player2);
 
     // create the initial apple
     let food = {
