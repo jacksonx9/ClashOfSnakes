@@ -1,5 +1,7 @@
 ## Clash of Snakes
 
+![](https://github.com/jacksonx9/Clash-of-Snakes/blob/master/dark_mode_snake.gif)
+
 ![](https://github.com/jacksonx9/Clash-of-Snakes/blob/master/Snake.gif)
 
 ### Installation 
